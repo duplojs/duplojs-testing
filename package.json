@@ -1,0 +1,48 @@
+{
+  "name": "@duplojs/testing",
+  "version": "0.0.0",
+  "author": "mathcovax",
+  "description": "",
+  "repository": "https://github.com/duplojs/duplojs-testing",
+  "license": "ISC",
+  "keywords": [],
+  "types": "./types/index.ts",
+  "exports": {
+    "default": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./types/index.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup --config && npx tsc -p tsconfig.build.json",
+    "test:tu": "vitest --coverage",
+    "test:types": "tsc"
+  },
+  "dependencies": {
+    "@duplojs/duplojs": ">=1.6.16 <2.0.0",
+    "node-mocks-http": "^1.14.1"
+  },
+  "devDependencies": {
+    "@duplojs/http-exception": ">=1.0.4 <2.0.0",
+    "@duplojs/what-was-sent": ">=1.3.4 <2.0.0",
+    "@rollup/plugin-json": "^6.0.1",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-istanbul": "^1.5.0",
+    "eslint": "^8.45.0",
+    "rollup": "^3.26.2",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "sucrase": "^3.34.0",
+    "typescript": "^5.4.2",
+    "vitest": "^1.5.0"
+  }
+}
