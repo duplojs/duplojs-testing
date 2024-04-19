@@ -1,9 +1,9 @@
-name: E2E
+name: TU
 
 on: [pull_request]
 
 jobs:
-  e2e:
+  tu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,4 +11,6 @@ jobs:
         with:
           node-version: '20.x'
       - run: npm ci
-      - run: npm run test:e2e
+      - run: npm run test:tu
+      - if: always()
+        uses:  davelosert/vitest-coverage-report-action@v2
