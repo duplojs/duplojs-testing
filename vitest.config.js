@@ -8,7 +8,7 @@ export default defineConfig({
 		setupFiles: "testing/setup.ts",
 		coverage: {
 			provider: "istanbul",
-			reporter: ["html", "text"],
+			reporter: ["html", "text", "json-summary"],
 			include: ["testing"]
 		}
 	},
