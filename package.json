@@ -6,12 +6,12 @@
   "repository": "https://github.com/duplojs/duplojs-testing",
   "license": "ISC",
   "keywords": [],
-  "types": "./types/index.ts",
+  "types": "./types/index.d.ts",
   "exports": {
     "default": {
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs",
-      "types": "./types/index.ts"
+      "types": "./types/index.d.ts"
     }
   },
   "files": [
@@ -27,7 +27,7 @@
     "test:types": "tsc"
   },
   "dependencies": {
-    "@duplojs/duplojs": ">=1.6.16 <2.0.0",
+    "@duplojs/duplojs": ">=1.8.20 <2.0.0",
     "node-mocks-http": "^1.14.1"
   },
   "devDependencies": {
