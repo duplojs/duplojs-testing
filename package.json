@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@duplojs/duplojs": ">=1.8.20 <2.0.0",
+    "@duplojs/editor-tools": "^1.2.5",
     "node-mocks-http": "^1.14.1"
   },
   "devDependencies": {

@@ -13,6 +13,16 @@ export const route1 = duplo
 		info: zod.string()
 	}
 })
+.cut(
+	({pickup}) => {
+		if(pickup("info") === "crach"){
+			throw new BadRequestHttpException("crash");
+		}
+		return {};
+	}, 
+	[],
+	new IHaveSentThis(BadRequestHttpException.code, "crashBad")
+)
 .handler(
 	({pickup}) => {
 		throw new OkHttpException(pickup("info"));
