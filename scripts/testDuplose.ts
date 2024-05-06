@@ -3,13 +3,14 @@ import httpMocks from "node-mocks-http";
 import EventEmitter from "events";
 import {Request} from "@duplojs/duplojs";
 import {DuploTesting} from ".";
+import {duploExtends, duploInject} from "@duplojs/editor-tools";
 
 interface MockCheckerOptions {
 	passCatch?: boolean | any[]
 }
 
 export function makeTestingHooksLifeCycle<
-	_duplose extends Duplose<any, any> = Duplose<any, any>,
+	_duplose extends Route | Process | AbstractRoute = Route | Process | AbstractRoute,
 	_request extends Request = Request,
 	_response extends Response = Response,
 >(){
@@ -21,7 +22,7 @@ export function makeTestingHooksLifeCycle<
 }
 
 export abstract class TestDuplose <
-	_duplose extends Duplose<any, any>,
+	_duplose extends Route | Process | AbstractRoute,
 	_request extends Request = Request,
 	_response extends Response = Response,
 	_returnType extends unknown = unknown
@@ -171,8 +172,24 @@ export abstract class TestDuplose <
 		
 		this.testingHooksLifeCycle.prepareDuplose.launchSubscriber(this.duplose);
 		
-		const floorInjecter = new CutStep(() => this.defaultFloorValue, Object.keys(this.defaultFloorValue));
-		this.duplose.steps.unshift(floorInjecter);
+		duploExtends(
+			this.duplose, 
+			{
+				defaultFloorValue: this.defaultFloorValue
+			}
+		);
+
+		duploInject(
+			this.duplose,
+			({code}) => {
+				Object.keys(this.defaultFloorValue).forEach((key) => {
+					code(
+						"after_make_floor", 
+						`floor.drop("${key}", this.extensions.defaultFloorValue["${key}"]);`
+					);
+				});
+			}
+		);
 
 		await this.duploInstance.class.serverHooksLifeCycle.beforeBuildRouter.launchSubscriberAsync();
 
