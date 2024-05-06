@@ -10,6 +10,13 @@ describe("route", () => {
 		.launch();	
 	
 		expect(res.information).toBe("test1");
+
+		const res1 = await duploTesting
+		.testRoute(route1)
+		.setDefaultFloorValue({info: "crach"})
+		.launch();
+		
+		expect(res1.information).toBe("WHAT_WAS_SENT_ERROR");
 	});
 
 	it("with checker", async() => {
