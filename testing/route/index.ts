@@ -131,3 +131,17 @@ export const route5 = duplo
 		throw new OkHttpException("good.test5", pickup("processValue"));
 	}
 );
+
+export const route6 = duplo
+.declareRoute("GET", "/")
+.extract({
+	body: {
+		info: zod.string().transform((v) => v)
+	}
+})
+.handler(
+	({pickup}) => {
+		throw new OkHttpException(pickup("info"));
+	},
+	new IHaveSentThis(OkHttpException.code, "test1")
+);

@@ -18,8 +18,7 @@ export class TestRoute<
 			duplose,
 			route,
 		);
-
-		duplose.extracted.body = !!route.extracted.body ? {} : undefined;
+		
 		duploInstance.routes[route.method].push(duplose);
 		duploInstance.class.serverHooksLifeCycle.onDeclareRoute.launchSubscriber(duplose);
 	}
