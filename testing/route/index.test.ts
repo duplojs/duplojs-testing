@@ -1,5 +1,5 @@
 import {duploTesting} from "../setup";
-import {route1, route2, route3, route4, route5} from ".";
+import {route1, route2, route3, route4, route5, route6} from ".";
 import {CutStep, Response} from "@duplojs/duplojs";
 
 describe("route", () => {
@@ -85,5 +85,14 @@ describe("route", () => {
 		.launch();
 	
 		expect(res2.information).toBe("INTERNAL_SERVER_ERROR");
+	});
+
+	it("extract body value", async() => {
+		const res = await duploTesting
+		.testRoute(route6)
+		.setRequestProperties({body: {info: "test1"}})
+		.launch();	
+	
+		expect(res.information).toBe("test1");
 	});
 });
