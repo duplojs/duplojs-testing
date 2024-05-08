@@ -5,9 +5,7 @@ describe("process", () => {
 	it("basic", async() => {
 		const result = await duploTesting
 		.testProcess(process1)
-		.setDefaultFloorValue({
-			info: "test"
-		})
+		.setRequestProperties({query: {info: "test"}})
 		.launch();
 
 		expect(result).toStrictEqual({processValue: "test"});

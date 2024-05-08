@@ -10,7 +10,7 @@ export const route1 = duplo
 .declareRoute("GET", "/")
 .extract({
 	query: {
-		info: zod.string()
+		info: zod.string().transform((v) => v)
 	}
 })
 .cut(
