@@ -6,14 +6,14 @@ describe("route", () => {
 	it("basic", async() => {
 		const res = await duploTesting
 		.testRoute(route1)
-		.setDefaultFloorValue({info: "test1"})
+		.setRequestProperties({query: {info: "test1"}})
 		.launch();	
 	
 		expect(res.information).toBe("test1");
 
 		const res1 = await duploTesting
 		.testRoute(route1)
-		.setDefaultFloorValue({info: "crach"})
+		.setRequestProperties({query: {info: "crach"}})
 		.launch();
 		
 		expect(res1.information).toBe("WHAT_WAS_SENT_ERROR");
