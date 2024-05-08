@@ -1,4 +1,4 @@
-import {AbstractRoute, AnyFunction, CheckerOutput, CheckerStep, CutStep, DuploInstance, Duplose, Hook, Process, ProcessStep, PromiseOrNot, Response, Route} from "@duplojs/duplojs";
+import {AbstractRoute, AnyFunction, CheckerOutput, CheckerStep, CutStep, DuploInstance, Duplose, ExtractObject, Hook, Process, ProcessStep, PromiseOrNot, Response, Route} from "@duplojs/duplojs";
 import httpMocks from "node-mocks-http";
 import EventEmitter from "events";
 import {Request} from "@duplojs/duplojs";
@@ -28,6 +28,7 @@ export abstract class TestDuplose <
 	_returnType extends unknown = unknown
 >{
 	protected defaultFloorValue: Record<any, unknown> = {};
+	protected requestProperties: Partial<Record<keyof ExtractObject, any>> = {};
 	protected testingHooksLifeCycle = makeTestingHooksLifeCycle<_duplose>();
 
 	constructor(
@@ -39,7 +40,7 @@ export abstract class TestDuplose <
 		this.duploTesting.pluginsCollection.forEach(([plugin, options]) => {
 			this.duploInstance.use(plugin, options);
 		});
-
+		this.duplose.extracted = originalDuplose.extracted;
 		this.duplose.descs = [...originalDuplose.descs];
 		this.duplose.steps = [...originalDuplose.steps];
 		this.duplose.handler = originalDuplose.handler;
@@ -83,6 +84,12 @@ export abstract class TestDuplose <
 
 	setDefaultFloorValue(defaultFloorValue: Record<any, unknown>){
 		this.defaultFloorValue = defaultFloorValue;
+
+		return this;
+	}
+
+	setRequestProperties(requestProperties: Partial<Record<keyof ExtractObject, any>>){
+		this.requestProperties = requestProperties;
 
 		return this;
 	}
@@ -200,6 +207,10 @@ export abstract class TestDuplose <
 
 		const rawResponse = httpMocks.createResponse({eventEmitter: EventEmitter});
 		const response = new this.duploInstance.class.Response(rawResponse) as _response;
+
+		Object.entries(this.requestProperties).forEach(([key, value]) => {
+			request[key] = value;
+		});
 
 		this.testingHooksLifeCycle.prepareRequest.launchSubscriber(request);
 		this.testingHooksLifeCycle.prepareResponse.launchSubscriber(response);
