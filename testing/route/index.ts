@@ -1,4 +1,4 @@
-import {BadRequestHttpException, OkHttpException} from "@duplojs/http-exception";
+import {BadRequestHttpException, OkHttpException, UnauthorizedHttpException} from "@duplojs/http-exception";
 import {duplo} from "../main";
 import {IHaveSentThis} from "@duplojs/what-was-sent";
 import {zod} from "@duplojs/duplojs";
@@ -134,11 +134,16 @@ export const route5 = duplo
 
 export const route6 = duplo
 .declareRoute("GET", "/")
-.extract({
-	body: {
-		info: zod.string().transform((v) => v)
+.extract(
+	{
+		body: {
+			info: zod.string().transform((v) => v)
+		}
+	}, 
+	() => {
+		throw new UnauthorizedHttpException("toto");
 	}
-})
+)
 .handler(
 	({pickup}) => {
 		throw new OkHttpException(pickup("info"));
