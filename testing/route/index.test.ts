@@ -94,5 +94,11 @@ describe("route", () => {
 		.launch();	
 	
 		expect(res.information).toBe("test1");
+
+		const res1 = await duploTesting
+		.testRoute(route6)
+		.launch();	
+	
+		expect(res1.information).toBe("toto");
 	});
 });

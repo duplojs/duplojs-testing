@@ -41,6 +41,7 @@ export abstract class TestDuplose <
 			this.duploInstance.use(plugin, options);
 		});
 		this.duplose.extracted = originalDuplose.extracted;
+		this.duplose.errorExtract = originalDuplose.errorExtract;
 		this.duplose.descs = [...originalDuplose.descs];
 		this.duplose.steps = [...originalDuplose.steps];
 		this.duplose.handler = originalDuplose.handler;
